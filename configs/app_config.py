@@ -2,4 +2,37 @@ import os
 
 
 class AppConfig:
-    VALID_API_KEYS = {os.getenv("X_API_KEY")}
+    @staticmethod
+    def get_valid_api_keys():
+        if not os.getenv("X_API_KEY"):
+            raise ValueError("X_API_KEY is not set")
+
+        return {os.getenv("X_API_KEY")}
+
+    @staticmethod
+    def get_allowed_origins():
+        if not os.getenv("ALLOWED_ORIGINS"):
+            raise ValueError("ALLOWED_ORIGINS is not set")
+
+        return os.getenv("ALLOWED_ORIGINS").split(",")
+
+    @staticmethod
+    def get_redis_connection_string():
+        if not os.getenv("REDIS_CONNECTION_STRING"):
+            raise ValueError("REDIS_CONNECTION_STRING is not set")
+
+        return os.getenv("REDIS_CONNECTION_STRING")
+
+    @staticmethod
+    def get_request_limit():
+        if not os.getenv("REQUEST_LIMIT"):
+            return 30
+
+        return int(os.getenv("REQUEST_LIMIT"))
+
+    @staticmethod
+    def get_time_window():
+        if not os.getenv("TIME_WINDOW"):
+            return 60
+
+        return int(os.getenv("TIME_WINDOW"))

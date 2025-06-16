@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends
 
+from configs.app_config import AppConfig
 from controllers.text_extractor_controller import TextExtractorController
 from dtos.text_extractor_dto import TextExtractorRequestDto, TextExtractorResponseDto
-from utils.rate_limiter import RateLimiter
+from fastapi_limiter.depends import RateLimiter
+
 
 text_extractor_router = APIRouter(prefix="/api/text-extractor")
 
@@ -10,7 +12,15 @@ text_extractor_controller = TextExtractorController()
 
 
 @text_extractor_router.post(
-    "/extract", dependencies=[Depends(RateLimiter(requests_limit=100, time_window=60))]
+    "/extract",
+    dependencies=[
+        Depends(
+            RateLimiter(
+                times=AppConfig.get_request_limit(),
+                seconds=AppConfig.get_time_window(),
+            )
+        )
+    ],
 )
 async def extract_text(
     text_extractor_dto: TextExtractorRequestDto = Depends(
