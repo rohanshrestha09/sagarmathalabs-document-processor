@@ -4,25 +4,13 @@ import tempfile
 import asyncio
 from fastapi import UploadFile
 from fpdf import FPDF
-from docling.document_converter import DocumentConverter, PdfFormatOption
-from docling.datamodel.accelerator_options import AcceleratorDevice, AcceleratorOptions
-from docling.datamodel.pipeline_options import (
-    PdfPipelineOptions,
-)
+from docling.document_converter import DocumentConverter
 from docling.datamodel.base_models import InputFormat
 from docling.chunking import HybridChunker
 
 
 class TextExtractorService:
     def __init__(self):
-        accelerator_options = AcceleratorOptions(
-            num_threads=8, device=AcceleratorDevice.MPS
-        )
-        pipeline_options = PdfPipelineOptions()
-        pipeline_options.accelerator_options = accelerator_options
-        pipeline_options.do_ocr = True
-        pipeline_options.do_table_structure = True
-        pipeline_options.table_structure_options.do_cell_matching = True
         self.document_converter = DocumentConverter(
             allowed_formats=[
                 InputFormat.HTML,
@@ -34,11 +22,6 @@ class TextExtractorService:
                 InputFormat.MD,
                 InputFormat.PPTX,
             ],
-            format_options={
-                InputFormat.PDF: PdfFormatOption(
-                    pipeline_options=pipeline_options,
-                ),
-            },
         )
 
         self.allowed_mimetypes = {
