@@ -17,7 +17,7 @@ text_extractor_controller = TextExtractorController()
         Depends(
             RateLimiter(
                 times=AppConfig.get_request_limit(),
-                seconds=AppConfig.get_time_window(),
+                seconds=AppConfig.get_request_time_window(),
             )
         )
     ],

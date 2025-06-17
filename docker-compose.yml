@@ -7,3 +7,10 @@ services:
     restart: always
     env_file:
       - .env
+
+  worker:
+    build: .
+    command: python worker.py
+    restart: always
+    env_file:
+      - .env

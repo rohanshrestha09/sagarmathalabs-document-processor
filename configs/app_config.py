@@ -24,6 +24,13 @@ class AppConfig:
         return os.getenv("REDIS_CONNECTION_STRING")
 
     @staticmethod
+    def get_queue_exchange_name():
+        if not os.getenv("QUEUE_EXCHANGE_NAME"):
+            raise ValueError("QUEUE_EXCHANGE_NAME is not set")
+
+        return os.getenv("QUEUE_EXCHANGE_NAME")
+
+    @staticmethod
     def get_request_limit():
         if not os.getenv("REQUEST_LIMIT"):
             return 30
@@ -31,8 +38,8 @@ class AppConfig:
         return int(os.getenv("REQUEST_LIMIT"))
 
     @staticmethod
-    def get_time_window():
-        if not os.getenv("TIME_WINDOW"):
+    def get_request_time_window():
+        if not os.getenv("REQUEST_TIME_WINDOW"):
             return 60
 
-        return int(os.getenv("TIME_WINDOW"))
+        return int(os.getenv("REQUEST_TIME_WINDOW"))
