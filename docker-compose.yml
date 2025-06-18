@@ -9,7 +9,7 @@ services:
       - .env
     networks:
       - sagarmathalabs_network
-      
+
   worker:
     build: .
     command: python worker.py
@@ -21,4 +21,4 @@ services:
 
 networks:
   sagarmathalabs_network:
-    driver: bridge
+    external: true
