@@ -13,6 +13,9 @@ from middlewares.exception_handlers import value_error_handler
 from middlewares.exception_handlers import exception_handler
 from middlewares.rate_limit_middleware import rate_limit_callback
 from routers.text_extractor_router import text_extractor_router
+from routers.youtube_transcript_extractor_router import (
+    youtube_transcript_extractor_router,
+)
 from configs.app_config import AppConfig
 
 load_dotenv()
@@ -54,6 +57,8 @@ app.exception_handler(Exception)(exception_handler)
 
 
 app.include_router(text_extractor_router)
+
+app.include_router(youtube_transcript_extractor_router)
 
 
 @app.get("/health")
