@@ -10,14 +10,14 @@ services:
     networks:
       - sagarmathalabs_network
 
-  worker:
-    build: .
-    command: python worker.py
-    restart: always
-    env_file:
-      - .env
-    networks:
-      - sagarmathalabs_network
+  # worker:
+  #   build: .
+  #   command: python worker.py
+  #   restart: always
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - sagarmathalabs_network
 
 networks:
   sagarmathalabs_network:
